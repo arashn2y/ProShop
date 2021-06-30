@@ -11,6 +11,7 @@ const HomeScreen = () => {
   ));
   return (
     <>
+      <h1>Latest Products</h1>
       <Row>{ShowProducts}</Row>
     </>
   );
