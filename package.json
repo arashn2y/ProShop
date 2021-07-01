@@ -1,0 +1,15 @@
+{
+  "name": "pro-shop",
+  "version": "1.0.0",
+  "description": "MERN shopping card SPA",
+  "main": "server.js",
+  "repository": "https://github.com/arashn2y/ProShop.git",
+  "author": "Arash Nouri <arashn2y@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node proshop-be/server"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

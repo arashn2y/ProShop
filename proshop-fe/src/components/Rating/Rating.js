@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 import classes from "./Rating.module.scss";
 
-const Rating = ({ rating, text, color }) => {
+const Rating = ({ rating, text }) => {
   const fullStars = Math.floor(rating);
   const halfStar = rating % 1 ? 1 : 0;
   const emptyStars = 5 - fullStars - halfStar;
