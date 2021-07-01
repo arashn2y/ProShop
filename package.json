@@ -3,13 +3,24 @@
   "version": "1.0.0",
   "description": "MERN shopping card SPA",
   "main": "server.js",
+  "type": "module",
   "repository": "https://github.com/arashn2y/ProShop.git",
   "author": "Arash Nouri <arashn2y@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node proshop-be/server"
+    "start": "node proshop-be/server",
+    "server": "nodemon proshop-be/server",
+    "client": "yarn --cwd proshop-fe start",
+    "dev": "concurrently \" yarn server\" \"yarn client\""
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "colors": "^1.4.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.0"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.0",
+    "nodemon": "^2.0.9"
   }
 }
