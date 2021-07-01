@@ -28,7 +28,7 @@ const Rating = ({ rating, text, color }) => {
             </span>
           ))
         : null}
-      <span> {text ?? null}</span>
+      <span>{text ?? null}</span>
     </div>
   );
 };
