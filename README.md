@@ -23,9 +23,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 
-### `yarn dev`
+### `yarn data:import`
 
-Runs the server with nodemon and app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Import data to the database
 
-The page will reload if you make edits for both server and react.\
+### `yarn data:destroy`
+
+delete all data from database
