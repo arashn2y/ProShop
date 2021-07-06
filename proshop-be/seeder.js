@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 import colors from "colors";
 
 import products from "./data/products.js";
@@ -19,8 +19,8 @@ const importData = async () => {
     await User.deleteMany();
 
     const createdUsers = await User.insertMany(users);
-    const adminUser = createdUsers[0]._id;
 
+    const adminUser = createdUsers[0]._id;
     const sampleProducts = products.map(product => {
       return {
         ...product,
