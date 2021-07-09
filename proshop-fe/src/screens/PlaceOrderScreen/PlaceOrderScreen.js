@@ -21,14 +21,14 @@ const PlaceOrderScreen = ({ history }) => {
   const { order, success, error } = orderCreate;
 
   useEffect(() => {
-    success && history.push(`/orders/${order._id}`);
+    success && history.push(`/order/${order._id}`);
     // eslint-disable-next-line
   }, [history, success]);
 
   const address = Object.values(shippingAddress).join(", ");
   const items = cartItems.map(item => {
     return (
-      <ListGroup.Item key={item.product}>
+      <ListGroup.Item className='px-0' key={item.product}>
         <Row>
           <Col md={1}>
             <Image src={item.image} alt={item.name} fluid rounded />
