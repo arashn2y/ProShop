@@ -44,3 +44,25 @@ export const getOrderDetails = id => async (dispatch, getState) => {
     });
   }
 };
+
+export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
+  try {
+    const token = getState().userLogin.userInfo.token;
+    dispatch({ type: constants.ORDER_PAY_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.put(`/api/orders/${id}/pay`, paymentResult, config);
+
+    dispatch({ type: constants.ORDER_PAY_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: constants.ORDER_PAY_FAIL,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
