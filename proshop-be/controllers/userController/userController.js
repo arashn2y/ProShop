@@ -4,7 +4,7 @@ import User from "../../models/userModel.js";
 import generateToken from "../../utils/generateToken.js";
 
 // @desc    Auth user & get token
-// @route   POST api/users/login
+// @route   POST /api/users/login
 // @access  Public
 export const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -26,7 +26,7 @@ export const authUser = asyncHandler(async (req, res) => {
 });
 
 // @desc    Register a new user
-// @route   POST api/users
+// @route   POST /api/users
 // @access  Public
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -59,7 +59,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get user profile
-// @route   POST api/users/profile
+// @route   POST /api/users/profile
 // @access  Private
 export const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -78,7 +78,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 });
 
 // @desc    update user profile
-// @route   PUT api/users/profile
+// @route   PUT /api/users/profile
 // @access  Private
 export const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -103,4 +103,13 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User not found");
   }
+});
+
+// @desc    Get all users
+// @route   GET /api/users
+// @access  Private/Admin
+export const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+
+  res.json(users);
 });
