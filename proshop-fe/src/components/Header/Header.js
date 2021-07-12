@@ -14,12 +14,27 @@ const Header = () => {
   };
 
   const logStatus = userInfo ? (
-    <NavDropdown title={userInfo.name} id='username'>
-      <LinkContainer to='/profile'>
-        <NavDropdown.Item>PROFILE</NavDropdown.Item>
-      </LinkContainer>
-      <NavDropdown.Item onClick={logoutHandler}>LOG OUT</NavDropdown.Item>
-    </NavDropdown>
+    <>
+      <NavDropdown title={userInfo.name} id='username'>
+        <LinkContainer to='/profile'>
+          <NavDropdown.Item>PROFILE</NavDropdown.Item>
+        </LinkContainer>
+        <NavDropdown.Item onClick={logoutHandler}>LOG OUT</NavDropdown.Item>
+      </NavDropdown>
+      {userInfo.isAdmin ? (
+        <NavDropdown title='ADMIN' id='username'>
+          <LinkContainer to='/admin/userlist'>
+            <NavDropdown.Item>Users</NavDropdown.Item>
+          </LinkContainer>
+          <LinkContainer to='/profile'>
+            <NavDropdown.Item>Products</NavDropdown.Item>
+          </LinkContainer>
+          <LinkContainer to='/profile'>
+            <NavDropdown.Item>Orders</NavDropdown.Item>
+          </LinkContainer>
+        </NavDropdown>
+      ) : null}
+    </>
   ) : (
     <LinkContainer to='/login'>
       <Nav.Link>

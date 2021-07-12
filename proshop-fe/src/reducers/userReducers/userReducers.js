@@ -36,6 +36,8 @@ export const userDetailsReducer = (state = { user: null }, action) => {
       return { loading: false, user: action.payload };
     case constants.USER_DETAILS_FAIL:
       return { loading: false, error: action.payload };
+    case constants.USER_DETAILS_RESET:
+      return { user: null };
     default:
       return state;
   }
@@ -49,6 +51,21 @@ export const userUpdateProfileReducer = (state = {}, action) => {
       return { loading: false, success: true, userInfo: action.payload };
     case constants.USER_UPDATE_PROFILE_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userListReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case constants.USER_LIST_REQUEST:
+      return { loading: true };
+    case constants.USER_LIST_SUCCESS:
+      return { loading: false, users: action.payload };
+    case constants.USER_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    case constants.USER_LIST_RESET:
+      return { users: [] };
     default:
       return state;
   }
