@@ -5,7 +5,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 import Message from "../../components/Message/Message";
 import Loader from "../../components/Loader/Loader";
-import { getUserList } from "../../actions/userActions";
+import { getUserList, deleteUser } from "../../actions/userActions";
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -16,12 +16,15 @@ const UserListScreen = ({ history }) => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userDelete = useSelector(state => state.userDelete);
+  const { success } = userDelete;
+
   useEffect(() => {
     userInfo && userInfo.isAdmin ? dispatch(getUserList()) : history.push("/login");
-  }, [dispatch, userInfo, history]);
+  }, [dispatch, userInfo, history, success]);
 
   const deleteUserHandler = userId => {
-    console.log(userId);
+    window.confirm("Are you sure?") && dispatch(deleteUser(userId));
   };
 
   return (

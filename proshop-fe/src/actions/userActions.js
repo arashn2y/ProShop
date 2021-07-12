@@ -123,7 +123,30 @@ export const getUserList = () => async (dispatch, getState) => {
     dispatch({ type: constants.USER_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
-      type: constants.USER_UPDATE_PROFILE_FAIL,
+      type: constants.USER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+export const deleteUser = userId => async (dispatch, getState) => {
+  try {
+    const token = getState().userLogin.userInfo.token;
+    dispatch({ type: constants.USER_DELETE_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.delete(`/api/users/${userId}`, config);
+
+    dispatch({ type: constants.USER_DELETE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: constants.USER_DELETE_FAIL,
       payload:
         error.response && error.response.data.message ? error.response.data.message : error.message,
     });
