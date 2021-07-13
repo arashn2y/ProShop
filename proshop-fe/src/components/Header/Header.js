@@ -13,36 +13,6 @@ const Header = () => {
     dispatch(logout());
   };
 
-  const logStatus = userInfo ? (
-    <>
-      <NavDropdown title={userInfo.name} id='username'>
-        <LinkContainer to='/profile'>
-          <NavDropdown.Item>PROFILE</NavDropdown.Item>
-        </LinkContainer>
-        <NavDropdown.Item onClick={logoutHandler}>LOG OUT</NavDropdown.Item>
-      </NavDropdown>
-      {userInfo.isAdmin ? (
-        <NavDropdown title='ADMIN' id='username'>
-          <LinkContainer to='/admin/userlist'>
-            <NavDropdown.Item>Users</NavDropdown.Item>
-          </LinkContainer>
-          <LinkContainer to='/admin/productlist'>
-            <NavDropdown.Item>Products</NavDropdown.Item>
-          </LinkContainer>
-          <LinkContainer to='/admin/orderlist'>
-            <NavDropdown.Item>Orders</NavDropdown.Item>
-          </LinkContainer>
-        </NavDropdown>
-      ) : null}
-    </>
-  ) : (
-    <LinkContainer to='/login'>
-      <Nav.Link>
-        <i className='fas fa-user'></i> SIGN IN
-      </Nav.Link>
-    </LinkContainer>
-  );
-
   return (
     <header>
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
@@ -58,7 +28,35 @@ const Header = () => {
                   <i className='fas fa-shopping-cart'></i> CART
                 </Nav.Link>
               </LinkContainer>
-              {logStatus}
+              {userInfo ? (
+                <>
+                  <NavDropdown title={userInfo.name} id='username'>
+                    <LinkContainer to='/profile'>
+                      <NavDropdown.Item>PROFILE</NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Item onClick={logoutHandler}>LOG OUT</NavDropdown.Item>
+                  </NavDropdown>
+                  {userInfo.isAdmin ? (
+                    <NavDropdown title='ADMIN' id='username'>
+                      <LinkContainer to='/admin/userlist'>
+                        <NavDropdown.Item>Users</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to='/admin/productlist'>
+                        <NavDropdown.Item>Products</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to='/admin/orderlist'>
+                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                      </LinkContainer>
+                    </NavDropdown>
+                  ) : null}
+                </>
+              ) : (
+                <LinkContainer to='/login'>
+                  <Nav.Link>
+                    <i className='fas fa-user'></i> SIGN IN
+                  </Nav.Link>
+                </LinkContainer>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

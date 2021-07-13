@@ -87,3 +87,24 @@ export const listMyOrder = () => async (dispatch, getState) => {
     });
   }
 };
+
+export const listOrders = () => async (dispatch, getState) => {
+  try {
+    const token = getState().userLogin.userInfo.token;
+    dispatch({ type: constants.ORDER_LIST_REQUEST });
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.get(`/api/orders`, config);
+
+    dispatch({ type: constants.ORDER_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: constants.ORDER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};

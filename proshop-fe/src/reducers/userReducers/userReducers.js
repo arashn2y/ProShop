@@ -1,6 +1,6 @@
 import * as constants from "../../constants/userConstants";
 
-export const userLoginReducer = (state = { userInfo: {} }, action) => {
+export const userLoginReducer = (state = {}, action) => {
   switch (action.type) {
     case constants.USER_LOGIN_REQUEST:
       return { loading: true };
@@ -28,7 +28,7 @@ export const userRegisterReducer = (state = {}, action) => {
   }
 };
 
-export const userDetailsReducer = (state = { user: {} }, action) => {
+export const userDetailsReducer = (state = {}, action) => {
   switch (action.type) {
     case constants.USER_DETAILS_REQUEST:
       return { ...state, loading: true };
@@ -37,7 +37,7 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
     case constants.USER_DETAILS_FAIL:
       return { loading: false, error: action.payload };
     case constants.USER_DETAILS_RESET:
-      return { user: {} };
+      return {};
     default:
       return state;
   }
