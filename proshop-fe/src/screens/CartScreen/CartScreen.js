@@ -53,7 +53,10 @@ const CartScreen = ({ match, location, history }) => {
                 </Form.Control>
               </Col>
               <Col md={2}>
-                <Button type='button' variant='light' onClick={() => removeFromCartHandler(item.product)}>
+                <Button
+                  type='button'
+                  variant='light'
+                  onClick={() => removeFromCartHandler(item.product)}>
                   <i className='fas fa-trash'></i>
                 </Button>
               </Col>
@@ -78,10 +81,16 @@ const CartScreen = ({ match, location, history }) => {
           <ListGroup variant='flush'>
             <ListGroup.Item>
               <h2>Subtotal ({cartItems.reduce((acc, item) => acc + +item.quantity, 0)}) items</h2>
-              <h3>${cartItems.reduce((acc, item) => acc + +item.quantity * item.price, 0)}</h3>
+              <h3>
+                ${cartItems.reduce((acc, item) => acc + +item.quantity * item.price, 0).toFixed(2)}
+              </h3>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Button type='button' className='btn-block' disabled={cartItems.length === 0} onClick={checkoutHandler}>
+              <Button
+                type='button'
+                className='btn-block'
+                disabled={cartItems.length === 0}
+                onClick={checkoutHandler}>
                 Proceed To Checkout
               </Button>
             </ListGroup.Item>

@@ -8,7 +8,7 @@ import ProductScreen from "./screens/ProductScreen/ProductScreen";
 import ProductListScreen from "./screens/ProductListScreen/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen/ProductEditScreen";
 import CartScreen from "./screens/CartScreen/CartScreen";
-import LoginScreen from "./screens/loginScreen/loginScreen";
+import LoginScreen from "./screens/LoginScreen/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 import ShippingScreen from "./screens/ShippingScreen/ShippingScreen";

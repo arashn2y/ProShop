@@ -16,15 +16,9 @@ const OrderListScreen = ({ history }) => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
-  console.log(orders);
-
   useEffect(() => {
     userInfo && userInfo.isAdmin ? dispatch(listOrders()) : history.push("/login");
   }, [dispatch, userInfo, history]);
-
-  const deleteUserHandler = userId => {
-    window.confirm("Are you sure?") && dispatch();
-  };
 
   return (
     <Row>

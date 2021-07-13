@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import * as constants from "../constants/orderConstants";
+import { CART_RESET } from "../constants/cartConstants";
 
 export const createOrder = order => async (dispatch, getState) => {
   try {
@@ -8,13 +9,15 @@ export const createOrder = order => async (dispatch, getState) => {
     dispatch({ type: constants.ORDER_CREATE_REQUEST });
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     };
     const { data } = await axios.post("/api/orders", order, config);
 
     dispatch({ type: constants.ORDER_CREATE_SUCCESS, payload: data });
+    dispatch({ type: CART_RESET });
+    localStorage.getItem("cartItems") && localStorage.removeItem("cartItems");
   } catch (error) {
     dispatch({
       type: constants.ORDER_CREATE_FAIL,
