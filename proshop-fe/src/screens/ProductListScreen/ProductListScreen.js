@@ -24,7 +24,7 @@ const ProductListScreen = ({ history }) => {
   }, [dispatch, userInfo, history, success]);
 
   const createProductHandler = () => {
-    console.log("create");
+    history.push("/admin/product/add");
   };
 
   const deleteProductHandler = productId => {

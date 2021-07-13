@@ -52,3 +52,25 @@ export const deleteProduct = id => async (dispatch, getState) => {
     });
   }
 };
+
+export const createProduct = product => async (dispatch, getState) => {
+  try {
+    const token = getState().userLogin.userInfo.token;
+    dispatch({ type: constants.PRODUCT_CREATE_REQUEST });
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.post("/api/products", config);
+
+    dispatch({ type: constants.PRODUCT_CREATE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: constants.PRODUCT_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
