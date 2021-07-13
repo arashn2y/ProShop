@@ -49,7 +49,7 @@ const cartItemsFromStorage = localStorage.getItem("cartItems")
   : [];
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? { userInfo: JSON.parse(localStorage.getItem("userInfo")) }
-  : { userInfo: null };
+  : { userInfo: {} };
 const shippingAddressStorage = localStorage.getItem("shippingAddress")
   ? JSON.parse(localStorage.getItem("shippingAddress"))
   : {};

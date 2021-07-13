@@ -5,7 +5,8 @@ import { LinkContainer } from "react-router-bootstrap";
 
 import Message from "../../components/Message/Message";
 import Loader from "../../components/Loader/Loader";
-import { listProducts, deleteProduct } from "../../actions/productActions";
+import { listProducts, deleteProduct, createProduct } from "../../actions/productActions";
+import { PRODUCT_CREATE_RESET } from "../../constants/productConstants";
 
 const ProductListScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -16,15 +17,34 @@ const ProductListScreen = ({ history }) => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
+  const productCreate = useSelector(state => state.productCreate);
+  const {
+    loading: createLoading,
+    success: createSuccess,
+    product: createdProduct,
+    error: createError,
+  } = productCreate;
+
   const productDelete = useSelector(state => state.productDelete);
-  const { loading: deleteLoading, success, error: deleteError } = productDelete;
+  const { loading: deleteLoading, success: deleteSuccess, error: deleteError } = productDelete;
 
   useEffect(() => {
-    userInfo && userInfo.isAdmin ? dispatch(listProducts()) : history.push("/login");
-  }, [dispatch, userInfo, history, success]);
+    dispatch({
+      type: PRODUCT_CREATE_RESET,
+    });
+    if (!userInfo || !userInfo.isAdmin) {
+      history.push("/login");
+    } else {
+      if (createSuccess) {
+        history.push(`/admin/product/${createdProduct._id}/edit`);
+      } else {
+        dispatch(listProducts());
+      }
+    }
+  }, [dispatch, userInfo, history, deleteSuccess, createSuccess, createdProduct]);
 
   const createProductHandler = () => {
-    history.push("/admin/product/add");
+    dispatch(createProduct());
   };
 
   const deleteProductHandler = productId => {
@@ -44,6 +64,8 @@ const ProductListScreen = ({ history }) => {
         </Col>
       </Row>
       <Row>
+        {createLoading && <Loader />}
+        {createError && <Message variant='danger'>{createError}</Message>}
         {deleteLoading && <Loader />}
         {deleteError && <Message variant='danger'>{deleteError}</Message>}
         <Col>

@@ -16,7 +16,7 @@ export const listProducts = () => async dispatch => {
   }
 };
 
-export const listProductsDetails = id => async dispatch => {
+export const listProductDetails = id => async dispatch => {
   try {
     dispatch({ type: constants.PRODUCT_DETAILS_REQUEST });
     const { data } = await axios.get(`/api/products/${id}`);
@@ -53,17 +53,18 @@ export const deleteProduct = id => async (dispatch, getState) => {
   }
 };
 
-export const createProduct = product => async (dispatch, getState) => {
+export const createProduct = () => async (dispatch, getState) => {
   try {
     const token = getState().userLogin.userInfo.token;
     dispatch({ type: constants.PRODUCT_CREATE_REQUEST });
     const config = {
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     };
 
-    const { data } = await axios.post("/api/products", config);
+    const { data } = await axios.post("/api/products", {}, config);
 
     dispatch({ type: constants.PRODUCT_CREATE_SUCCESS, payload: data });
   } catch (error) {
