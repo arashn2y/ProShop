@@ -40,7 +40,7 @@ const ProductScreen = ({ history, match }) => {
             <Rating rating={product.rating} text={`${product.numReviews} reviews`} />
           </ListGroup.Item>
           <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
-          <ListGroup.Item>Description: ${product.description}</ListGroup.Item>
+          <ListGroup.Item>Description: {product.description}</ListGroup.Item>
         </ListGroup>
       </Col>
       <Col md={3}>
@@ -67,7 +67,11 @@ const ProductScreen = ({ history, match }) => {
                 <Row>
                   <Col>Quantity:</Col>
                   <Col>
-                    <Form.Control style={{ padding: "12px 15px" }} as='select' value={quantity} onChange={event => setQuantity(event.target.value)}>
+                    <Form.Control
+                      style={{ padding: "12px 15px" }}
+                      as='select'
+                      value={quantity}
+                      onChange={event => setQuantity(event.target.value)}>
                       {[...Array(product.countInStock).keys()].map(number => (
                         <option key={number + 1} value={number + 1}>
                           {number + 1}
@@ -79,7 +83,11 @@ const ProductScreen = ({ history, match }) => {
               </ListGroup.Item>
             )}
             <ListGroup.Item>
-              <Button className='btn-block' type='button' disabled={product.countInStock > 0 ? false : true} onClick={addToCartHandler}>
+              <Button
+                className='btn-block'
+                type='button'
+                disabled={product.countInStock > 0 ? false : true}
+                onClick={addToCartHandler}>
                 Add to cart
               </Button>
             </ListGroup.Item>
