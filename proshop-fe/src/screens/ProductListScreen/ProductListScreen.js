@@ -5,7 +5,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 import Message from "../../components/Message/Message";
 import Loader from "../../components/Loader/Loader";
-import { listProducts } from "../../actions/productActions";
+import { listProducts, deleteProduct } from "../../actions/productActions";
 
 const ProductListScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -16,16 +16,19 @@ const ProductListScreen = ({ history }) => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
+  const productDelete = useSelector(state => state.productDelete);
+  const { loading: deleteLoading, success, error: deleteError } = productDelete;
+
   useEffect(() => {
     userInfo && userInfo.isAdmin ? dispatch(listProducts()) : history.push("/login");
-  }, [dispatch, userInfo, history]);
+  }, [dispatch, userInfo, history, success]);
 
   const createProductHandler = () => {
     console.log("create");
   };
 
   const deleteProductHandler = productId => {
-    window.confirm("Are you sure?") && console.log(productId);
+    window.confirm("Are you sure?") && dispatch(deleteProduct(productId));
   };
 
   return (
@@ -41,6 +44,8 @@ const ProductListScreen = ({ history }) => {
         </Col>
       </Row>
       <Row>
+        {deleteLoading && <Loader />}
+        {deleteError && <Message variant='danger'>{deleteError}</Message>}
         <Col>
           {loading ? (
             <Loader />
