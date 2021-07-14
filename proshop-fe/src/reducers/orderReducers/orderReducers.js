@@ -26,6 +26,8 @@ export const orderDetailsReducer = (
       return { loading: false, order: action.payload };
     case constants.ORDER_DETAILS_FAIL:
       return { loading: false, error: action.payload };
+    case constants.ORDER_DETAILS_RESET:
+      return { loading: true, orderItems: [], shippingAddress: {} };
     default:
       return state;
   }

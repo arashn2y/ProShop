@@ -3,12 +3,12 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { PayPalButton } from "react-paypal-button-v2";
 import { Link } from "react-router-dom";
-import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
+import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 
 import { getOrderDetails, payOrder } from "../../actions/orderActions";
 import Message from "../../components/Message/Message";
 import Loader from "../../components/Loader/Loader";
-import { ORDER_PAY_RESET } from "../../constants/orderConstants";
+import { ORDER_DETAILS_RESET, ORDER_PAY_RESET } from "../../constants/orderConstants";
 
 const OrderScreen = ({ match }) => {
   const orderId = match.params.id;
@@ -22,6 +22,13 @@ const OrderScreen = ({ match }) => {
 
   const orderPay = useSelector(state => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
+
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    dispatch({ type: ORDER_DETAILS_RESET });
+  }, []);
 
   useEffect(() => {
     const addPayPalScript = async () => {
@@ -148,7 +155,7 @@ const OrderScreen = ({ match }) => {
                   <Col md={6}>${order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              {!order.isPaid && (
+              {!order.isPaid && userInfo.id === order.user._id && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
                   {!sdkReady ? (
@@ -156,6 +163,15 @@ const OrderScreen = ({ match }) => {
                   ) : (
                     <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />
                   )}
+                </ListGroup.Item>
+              )}
+              {userInfo.isAdmin && (
+                <ListGroup.Item>
+                  {
+                    <Button type='button' className='btn-block'>
+                      Mark as delivered
+                    </Button>
+                  }
                 </ListGroup.Item>
               )}
             </ListGroup>
