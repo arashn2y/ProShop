@@ -153,11 +153,11 @@ const ProfileScreen = ({ history }) => {
             style={{ textAlign: "center" }}>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>DATE</th>
-                <th>TOTAL</th>
-                <th>PAID</th>
-                <th>DELIVERED</th>
+                <th className='align-middle'>ID</th>
+                <th className='align-middle'>DATE</th>
+                <th className='align-middle'>TOTAL</th>
+                <th className='align-middle'>PAID</th>
+                <th className='align-middle'>DELIVERED</th>
                 <th></th>
               </tr>
             </thead>
@@ -165,24 +165,24 @@ const ProfileScreen = ({ history }) => {
               {myOrders.map(order => {
                 return (
                   <tr key={order._id}>
-                    <td>{order._id}</td>
-                    <td>{order.createdAt.substring(0, 10)}</td>
-                    <td>{order.totalPrice}</td>
-                    <td>
+                    <td className='align-middle'>{order._id}</td>
+                    <td className='align-middle'>{order.createdAt.substring(0, 10)}</td>
+                    <td className='align-middle'>{order.totalPrice}</td>
+                    <td className='align-middle'>
                       {order.isPaid ? (
                         order.paidAt.substring(0, 10)
                       ) : (
                         <i className='fas fa-times' style={{ color: "#ff0000" }}></i>
                       )}
                     </td>
-                    <td>
+                    <td className='align-middle'>
                       {order.isDelivered ? (
                         order.deliveredAt.substring(0, 10)
                       ) : (
                         <i className='fas fa-times' style={{ color: "#ff0000" }}></i>
                       )}
                     </td>
-                    <td>
+                    <td className='align-middle'>
                       <LinkContainer to={`/order/${order._id}`}>
                         <Button className='btn-sm' variant='light'>
                           Details

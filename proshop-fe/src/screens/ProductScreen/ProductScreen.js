@@ -9,17 +9,18 @@ import Message from "../../components/Message/Message";
 import Rating from "../../components/Rating/Rating";
 
 const ProductScreen = ({ history, match }) => {
+  const productId = match.params.id;
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const productDetails = useSelector(state => state.productDetails);
   const { loading, error, product } = productDetails;
 
   useEffect(() => {
-    dispatch(listProductDetails(match.params.id));
-  }, [dispatch, match]);
+    dispatch(listProductDetails(productId));
+  }, [dispatch, productId]);
 
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${quantity}`);
+    history.push(`/cart/${productId}?qty=${quantity}`);
   };
 
   const contents = loading ? (

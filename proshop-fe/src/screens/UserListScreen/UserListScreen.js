@@ -49,10 +49,10 @@ const UserListScreen = ({ history }) => {
             style={{ textAlign: "center" }}>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>EMAIL</th>
-                <th>ADMIN</th>
+                <th className='align-middle'>ID</th>
+                <th className='align-middle'>NAME</th>
+                <th className='align-middle'>EMAIL</th>
+                <th className='align-middle'>ADMIN</th>
                 <th></th>
               </tr>
             </thead>
@@ -60,19 +60,19 @@ const UserListScreen = ({ history }) => {
               {users.map(user => {
                 return (
                   <tr key={user._id}>
-                    <td>{user._id}</td>
-                    <td>{user.name}</td>
-                    <td>
+                    <td className='align-middle'>{user._id}</td>
+                    <td className='align-middle'>{user.name}</td>
+                    <td className='align-middle'>
                       <a href={`mailto:${user.email}`}>{user.email}</a>
                     </td>
-                    <td>
+                    <td className='align-middle'>
                       {user.isAdmin ? (
                         <i className='fas fa-check' style={{ color: "#00ff00" }}></i>
                       ) : (
                         <i className='fas fa-times' style={{ color: "#ff0000" }}></i>
                       )}
                     </td>
-                    <td>
+                    <td className='align-middle'>
                       <LinkContainer to={`/admin/user/${user._id}/edit`}>
                         <Button className='btn-sm' variant='light'>
                           <i className='fas fa-edit'></i>

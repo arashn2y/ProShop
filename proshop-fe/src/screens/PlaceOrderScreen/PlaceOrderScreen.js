@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Row, Col, ListGroup, Image, Button, Card } from "react-bootstrap";
 
 import { createOrder } from "../../actions/orderActions";
+import { updateProduct } from "../../actions/productActions";
 import Message from "../../components/Message/Message";
 import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
 import { ORDER_CREATE_RESET } from "../../constants/orderConstants";
@@ -50,6 +51,11 @@ const PlaceOrderScreen = ({ history }) => {
   });
 
   const placeOrderHandler = () => {
+    cartItems.forEach(item => {
+      dispatch(
+        updateProduct({ _id: item.product, countInStock: item.countInStock - item.quantity })
+      );
+    });
     dispatch(
       createOrder({
         orderItems: cartItems,

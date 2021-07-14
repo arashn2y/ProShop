@@ -35,11 +35,13 @@ const CartScreen = ({ match, location, history }) => {
               <Col md={2}>
                 <Image src={item.image} alt={item.name} fluid rounded />
               </Col>
-              <Col md={3}>
+              <Col md={5} className='d-flex align-items-center'>
                 <Link to={`/product/${item.product}`}>{item.name}</Link>
               </Col>
-              <Col md={2}>${item.price}</Col>
-              <Col md={2}>
+              <Col md={2} className='d-flex justify-content-center align-items-center'>
+                ${item.price}
+              </Col>
+              <Col md={2} className='d-flex justify-content-center align-items-center'>
                 <Form.Control
                   style={{ padding: "12px 15px" }}
                   as='select'
@@ -52,10 +54,11 @@ const CartScreen = ({ match, location, history }) => {
                   ))}
                 </Form.Control>
               </Col>
-              <Col md={2}>
+              <Col md={1} className='d-flex justify-content-center align-items-center'>
                 <Button
                   type='button'
                   variant='light'
+                  className='p-0'
                   onClick={() => removeFromCartHandler(item.product)}>
                   <i className='fas fa-trash'></i>
                 </Button>

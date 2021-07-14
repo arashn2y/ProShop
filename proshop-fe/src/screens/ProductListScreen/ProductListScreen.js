@@ -85,11 +85,11 @@ const ProductListScreen = ({ history }) => {
               style={{ textAlign: "center" }}>
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>NAME</th>
-                  <th>PRICE</th>
-                  <th>CATEGORY</th>
-                  <th>BRAND</th>
+                  <th className='align-middle'>ID</th>
+                  <th className='align-middle'>NAME</th>
+                  <th className='align-middle'>PRICE</th>
+                  <th className='align-middle'>CATEGORY</th>
+                  <th className='align-middle'>BRAND</th>
                   <th></th>
                 </tr>
               </thead>
@@ -97,12 +97,12 @@ const ProductListScreen = ({ history }) => {
                 {products.map(product => {
                   return (
                     <tr key={product._id}>
-                      <td>{product._id}</td>
-                      <td>{product.name}</td>
-                      <td>${product.price}</td>
-                      <td>{product.category}</td>
-                      <td>{product.brand}</td>
-                      <td>
+                      <td className='align-middle'>{product._id}</td>
+                      <td className='align-middle'>{product.name}</td>
+                      <td className='align-middle'>${product.price}</td>
+                      <td className='align-middle'>{product.category}</td>
+                      <td className='align-middle'>{product.brand}</td>
+                      <td className='align-middle'>
                         <LinkContainer to={`/admin/product/${product._id}/edit`}>
                           <Button className='btn-sm' variant='light'>
                             <i className='fas fa-edit'></i>
