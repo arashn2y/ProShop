@@ -38,9 +38,7 @@ const OrderScreen = ({ match, history }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (!userInfo.name) {
-      history.push("/login");
-    }
+    !userInfo && history.push("/login");
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get("/api/config/paypal");
       const script = document.createElement("script");
@@ -170,7 +168,7 @@ const OrderScreen = ({ match, history }) => {
                   <Col md={6}>${order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              {!order.isPaid && userInfo.id === order.user._id && (
+              {userInfo && userInfo.id === order.user._id && !order.isPaid && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
                   {!sdkReady ? (
