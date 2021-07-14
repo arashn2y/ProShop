@@ -25,7 +25,6 @@ const LoginScreen = ({ location, history }) => {
   const submitHandler = e => {
     e.preventDefault();
     dispatch(login(email, password));
-    history.push(redirect);
   };
 
   return (
@@ -40,6 +39,7 @@ const LoginScreen = ({ location, history }) => {
             type='email'
             placeholder='Enter Your Email'
             value={email}
+            required
             onChange={e => setEmail(e.target.value)}></Form.Control>
         </Form.Group>
         <Form.Group controlId='password'>
@@ -48,6 +48,7 @@ const LoginScreen = ({ location, history }) => {
             type='password'
             placeholder='Enter Your password'
             value={password}
+            required
             onChange={e => setPassword(e.target.value)}></Form.Control>
         </Form.Group>
         <Button type='submit' variant='primary'>

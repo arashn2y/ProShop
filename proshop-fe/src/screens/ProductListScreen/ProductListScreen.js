@@ -32,14 +32,16 @@ const ProductListScreen = ({ history }) => {
     dispatch({
       type: PRODUCT_CREATE_RESET,
     });
-    if (!userInfo || !userInfo.isAdmin) {
-      history.push("/login");
-    } else {
+    if (!userInfo) {
+      history.push("/login?redirect=admin/productlist");
+    } else if (userInfo.isAdmin) {
       if (createSuccess) {
         history.push(`/admin/product/${createdProduct._id}/edit`);
       } else {
         dispatch(listProducts());
       }
+    } else {
+      history.push("/");
     }
   }, [dispatch, userInfo, history, deleteSuccess, createSuccess, createdProduct]);
 

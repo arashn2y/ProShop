@@ -70,6 +70,28 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
   }
 };
 
+export const deliverOrder = orderId => async (dispatch, getState) => {
+  try {
+    const token = getState().userLogin.userInfo.token;
+    dispatch({ type: constants.ORDER_DELIVER_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    await axios.put(`/api/orders/${orderId}/deliver`, {}, config);
+
+    dispatch({ type: constants.ORDER_DELIVER_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: constants.ORDER_DELIVER_FAIL,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
 export const listMyOrder = () => async (dispatch, getState) => {
   try {
     const token = getState().userLogin.userInfo.token;

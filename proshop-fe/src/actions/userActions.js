@@ -6,7 +6,7 @@ export const login = (email, password) => async dispatch => {
   try {
     dispatch({ type: constants.USER_LOGIN_REQUEST });
     const config = {
-      header: {
+      headers: {
         "Content-Type": "application/json",
       },
     };

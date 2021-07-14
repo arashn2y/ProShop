@@ -20,7 +20,11 @@ const UserListScreen = ({ history }) => {
   const { success } = userDelete;
 
   useEffect(() => {
-    userInfo && userInfo.isAdmin ? dispatch(getUserList()) : history.push("/login");
+    !userInfo
+      ? history.push("/login?redirect=admin/userlist")
+      : userInfo.isAdmin
+      ? dispatch(getUserList())
+      : history.push("/");
   }, [dispatch, userInfo, history, success]);
 
   const deleteUserHandler = userId => {
