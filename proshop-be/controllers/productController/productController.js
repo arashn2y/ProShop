@@ -66,7 +66,7 @@ export const createProduct = asyncHandler(async (req, res) => {
   res.status(201).json(createdProduct);
 });
 
-// @desc    update product
+// @desc    Update product
 // @route   PUT /api/products/:id
 // @access  Private/Admin
 export const updateProduct = asyncHandler(async (req, res) => {
@@ -85,6 +85,42 @@ export const updateProduct = asyncHandler(async (req, res) => {
     const updatedProduct = await product.save();
 
     res.json(updatedProduct);
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
+// @desc    Create new review
+// @route   POST /api/products/:id/reviews
+// @access  Private
+export const crateProductReview = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  const { rating, comment } = req.body;
+
+  if (product) {
+    const isUserReviewed = product.reviews.find(
+      review => review.user._id.toString() === req.user._id.toString()
+    );
+    if (isUserReviewed) {
+      res.status(404);
+      throw new Error("Product already reviewed by you!");
+    } else {
+      const review = {
+        name: req.user.name,
+        rating: +rating,
+        comment,
+        user: req.user._id,
+      };
+
+      product.reviews.push(review);
+      product.numReviews = product.reviews.length;
+      product.rating =
+        product.reviews.reduce((acc, currVal) => acc + currVal.rating, 0) / product.numReviews;
+
+      await product.save();
+
+      res.status(201).json("Review added");
+    }
   } else {
     res.status(404);
     throw new Error("Product not found");

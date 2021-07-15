@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import path from "path";
+import morgan from "morgan";
 import colors from "colors";
 
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
@@ -13,6 +14,7 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 dotenv.config();
 connectDB();
 const app = express();
+process.env.NODE_ENV === "development" && app.use(morgan("dev"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
