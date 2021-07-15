@@ -9,7 +9,16 @@ import Product from "../../models/productModel.js";
 export const getProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({});
 
-  res.json(products);
+  const search = req.query.search;
+
+  if (search) {
+    const searchedProducts = products.filter(product =>
+      product.name.toLowerCase().includes(search)
+    );
+    res.json(searchedProducts);
+  } else {
+    res.json(products);
+  }
 });
 
 // @desc    Fetch single product

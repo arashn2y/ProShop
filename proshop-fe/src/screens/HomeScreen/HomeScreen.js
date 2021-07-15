@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Form } from "react-bootstrap";
 
 import { listProducts } from "../../actions/productActions";
 import Product from "../../components/Product/Product";
@@ -15,6 +15,14 @@ const HomeScreen = () => {
   useEffect(() => {
     dispatch(listProducts());
   }, [dispatch]);
+
+  let debounce;
+  const searchHandler = search => {
+    clearTimeout(debounce);
+    debounce = setTimeout(() => {
+      dispatch(listProducts(search));
+    }, 500);
+  };
 
   const ShowProducts = loading ? (
     <Loader />
@@ -32,7 +40,12 @@ const HomeScreen = () => {
   return (
     <>
       <h1>Latest Products</h1>
-      {ShowProducts}
+      <Form.Control
+        type='text'
+        placeholder='Search'
+        onChange={e => searchHandler(e.target.value)}
+      />
+      <div className='mt-3'>{ShowProducts}</div>
     </>
   );
 };
