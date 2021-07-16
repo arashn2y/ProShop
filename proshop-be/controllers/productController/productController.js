@@ -7,18 +7,26 @@ import Product from "../../models/productModel.js";
 // @access  Public
 
 export const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  const pageSize = 10;
 
-  const search = req.query.search;
+  const searchedValue = req.query.search;
+  const page = +req.query.pageNumber;
 
-  if (search) {
-    const searchedProducts = products.filter(product =>
-      product.name.toLowerCase().includes(search)
-    );
-    res.json(searchedProducts);
-  } else {
-    res.json(products);
-  }
+  const searchedProduct = searchedValue
+    ? {
+        name: {
+          $regex: searchedValue,
+          $options: "i",
+        },
+      }
+    : {};
+
+  const count = await Product.countDocuments({ ...searchedProduct });
+  const products = await Product.find({ ...searchedProduct })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 // @desc    Fetch single product

@@ -6,21 +6,26 @@ import { listProducts } from "../../actions/productActions";
 import Product from "../../components/Product/Product";
 import Message from "../../components/Message/Message";
 import Loader from "../../components/Loader/Loader";
+import Paginate from "../../components/Paginate/Paginate";
 
-const HomeScreen = () => {
+const HomeScreen = ({ history, match }) => {
+  const searchedValue = match.params.search;
+  const pageNumber = match.params.pageNumber || 1;
+
   const dispatch = useDispatch();
+
   const productsList = useSelector(state => state.productList);
-  const { loading, error, products } = productsList;
+  const { loading, error, products, pages, page } = productsList;
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(searchedValue, pageNumber));
+  }, [dispatch, searchedValue, pageNumber]);
 
   let debounce;
   const searchHandler = search => {
     clearTimeout(debounce);
     debounce = setTimeout(() => {
-      dispatch(listProducts(search));
+      history.push(`/search/${search}`);
     }, 500);
   };
 
@@ -29,13 +34,16 @@ const HomeScreen = () => {
   ) : error ? (
     <Message variant='danger'>{error}</Message>
   ) : (
-    <Row>
-      {products.map(product => (
-        <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
-          <Product product={product} />
-        </Col>
-      ))}
-    </Row>
+    <>
+      <Row>
+        {products.map(product => (
+          <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
+            <Product product={product} />
+          </Col>
+        ))}
+      </Row>
+      <Paginate pages={pages} page={page} keyword={searchedValue ? searchedValue : ""} />
+    </>
   );
   return (
     <>

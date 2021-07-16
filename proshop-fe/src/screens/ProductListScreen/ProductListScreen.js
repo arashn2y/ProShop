@@ -5,14 +5,17 @@ import { LinkContainer } from "react-router-bootstrap";
 
 import Message from "../../components/Message/Message";
 import Loader from "../../components/Loader/Loader";
+import Paginate from "../../components/Paginate/Paginate";
 import { listProducts, deleteProduct, createProduct } from "../../actions/productActions";
 import { PRODUCT_CREATE_RESET } from "../../constants/productConstants";
 
-const ProductListScreen = ({ history }) => {
+const ProductListScreen = ({ history, match }) => {
+  const pageNumber = match.params.pageNumber || 1;
+
   const dispatch = useDispatch();
 
   const productList = useSelector(state => state.productList);
-  const { loading, products, error } = productList;
+  const { loading, products, error, pages, page } = productList;
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
@@ -38,12 +41,12 @@ const ProductListScreen = ({ history }) => {
       if (createSuccess) {
         history.push(`/admin/product/${createdProduct._id}/edit`);
       } else {
-        dispatch(listProducts());
+        dispatch(listProducts("", pageNumber));
       }
     } else {
       history.push("/");
     }
-  }, [dispatch, userInfo, history, deleteSuccess, createSuccess, createdProduct]);
+  }, [dispatch, userInfo, history, deleteSuccess, createSuccess, createdProduct, pageNumber]);
 
   const createProductHandler = () => {
     dispatch(createProduct());
@@ -123,6 +126,7 @@ const ProductListScreen = ({ history }) => {
           )}
         </Col>
       </Row>
+      <Paginate pages={pages} page={page} keyword='' isAdmin={true} />
     </>
   );
 };
