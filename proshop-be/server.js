@@ -19,10 +19,6 @@ process.env.NODE_ENV === "development" && app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
-  res.send("Server is running...");
-});
-
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
@@ -32,6 +28,17 @@ app.get("/api/config/paypal", (req, res) => res.send(process.env.PAYPAL_CLIENT_I
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/proshop-fe/build")));
+  app.use("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "proshop", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("Server is running...");
+  });
+}
 
 app.use(notFound);
 app.use(errorHandler);
