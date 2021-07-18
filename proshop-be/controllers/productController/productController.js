@@ -143,3 +143,12 @@ export const crateProductReview = asyncHandler(async (req, res) => {
     throw new Error("Product not found");
   }
 });
+
+// @desc    Get Top Rated Products
+// @route   GET /api/products/top
+// @access  Public
+export const getTopRatedProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+
+  res.json(products);
+});

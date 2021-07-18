@@ -7,6 +7,7 @@ import Product from "../../components/Product/Product";
 import Message from "../../components/Message/Message";
 import Loader from "../../components/Loader/Loader";
 import Paginate from "../../components/Paginate/Paginate";
+import ProductCarousel from "../../components/ProductCarousel/ProductCarousel";
 
 const HomeScreen = ({ history, match }) => {
   const searchedValue = match.params.search;
@@ -47,12 +48,13 @@ const HomeScreen = ({ history, match }) => {
   );
   return (
     <>
-      <h1>Latest Products</h1>
       <Form.Control
         type='text'
         placeholder='Search'
         onChange={e => searchHandler(e.target.value)}
       />
+      <ProductCarousel />
+      <h1>Latest Products</h1>
       <div className='mt-3'>{ShowProducts}</div>
     </>
   );
