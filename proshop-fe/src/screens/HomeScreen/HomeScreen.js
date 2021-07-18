@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Row, Col, Form } from "react-bootstrap";
 
 import { listProducts } from "../../actions/productActions";
@@ -8,6 +9,7 @@ import Message from "../../components/Message/Message";
 import Loader from "../../components/Loader/Loader";
 import Paginate from "../../components/Paginate/Paginate";
 import ProductCarousel from "../../components/ProductCarousel/ProductCarousel";
+import Meta from "../../components/Meta/Meta";
 
 const HomeScreen = ({ history, match }) => {
   const searchedValue = match.params.search;
@@ -48,12 +50,18 @@ const HomeScreen = ({ history, match }) => {
   );
   return (
     <>
+      <Meta />
       <Form.Control
         type='text'
         placeholder='Search'
         onChange={e => searchHandler(e.target.value)}
       />
-      <ProductCarousel />
+      {!searchedValue && <ProductCarousel />}
+      {searchedValue && (
+        <Link className='btn btn-light my-3' to='/'>
+          Go Back
+        </Link>
+      )}
       <h1>Latest Products</h1>
       <div className='mt-3'>{ShowProducts}</div>
     </>

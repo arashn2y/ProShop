@@ -8,6 +8,7 @@ import { PRODUCT_CREATE_REVIEW_RESET } from "../../constants/productConstants";
 import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";
 import Rating from "../../components/Rating/Rating";
+import Meta from "../../components/Meta/Meta";
 
 const ProductScreen = ({ history, match }) => {
   const productId = match.params.id;
@@ -59,6 +60,7 @@ const ProductScreen = ({ history, match }) => {
     <Message variant='danger'>{error}</Message>
   ) : (
     <>
+      <Meta title={product.name} />
       <Row>
         <Col md={6}>
           <Image src={product.image} alt={product.name} fluid />
