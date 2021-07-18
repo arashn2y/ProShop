@@ -14,6 +14,7 @@
     "dev": "concurrently \" yarn server\" \"yarn client\"",
     "data:import": "node proshop-be/seeder",
     "data:destroy": "node proshop-be/seeder -d"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix proshop-fe && npm run build --prefix proshop-fe"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
