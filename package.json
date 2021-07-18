@@ -4,6 +4,9 @@
   "description": "MERN shopping card SPA",
   "main": "server.js",
   "type": "module",
+  "engines": {
+    "node": "14.16.0"
+  },
   "repository": "https://github.com/arashn2y/ProShop.git",
   "author": "Arash Nouri <arashn2y@gmail.com>",
   "license": "MIT",
